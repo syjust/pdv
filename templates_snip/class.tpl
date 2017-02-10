@@ -6,5 +6,6 @@
  * @abstract{{/abstract}}{{#final}}
  * @final{{/final}}
  *
+ * @author {{author}}
  * @date {{date}}
  */

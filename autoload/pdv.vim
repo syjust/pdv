@@ -181,6 +181,7 @@ func! pdv#ParseClassData(line)
 	let l:data["abstract"] = s:GetAbstract(matches[2])
 	let l:data["final"] = s:GetFinal(matches[2])
 	let l:data["date"] = s:GetDate()
+	let l:data["author"] = s:GetAuthor()
 
 	if (!empty(l:matches[5]))
 		call s:ParseExtendsImplements(l:data, l:matches[5])
@@ -202,6 +203,7 @@ func! pdv#ParseInterfaceData(line)
 	let l:data["name"] = matches[2]
 
 	let l:data["date"] = s:GetDate()
+	let l:data["author"] = s:GetAuthor()
 	let l:data["parents"] = []
 
 	let i = 2
@@ -224,6 +226,7 @@ func! pdv#ParseTraitData(line)
 	let l:data["indent"] = matches[1]
 	let l:data["name"] = matches[2]
 	let l:data["date"] = s:GetDate()
+	let l:data["author"] = s:GetAuthor()
 
 	return l:data
 endfunc
@@ -272,6 +275,7 @@ func! pdv#ParseConstData(line)
 	let l:data["indent"] = l:matches[1]
 	let l:data["name"] = l:matches[2]
 	let l:data["date"] = s:GetDate()
+	let l:data["author"] = s:GetAuthor()
 
 	return l:data
 endfunc
@@ -287,6 +291,7 @@ func! pdv#ParseAttributeData(line)
 	let l:data["static"] = s:GetStatic(l:matches[2])
 	let l:data["name"] = l:matches[4]
 	let l:data["date"] = s:GetDate()
+	let l:data["author"] = s:GetAuthor()
 	" TODO: Cleanup ; and friends
 	let l:data["default"] = get(l:matches, 5, '')
 	let l:data["type"] = s:GuessType(l:data["default"])
@@ -299,6 +304,7 @@ func! pdv#ParseFunctionData(line)
 
 	let l:data = s:ParseBasicFunctionData(l:text)
 	let l:data["date"] = s:GetDate()
+	let l:data["author"] = s:GetAuthor()
 	let l:data["parameters"] = []
 
 	let l:parameters = parparse#ParseParameters(a:line)
@@ -355,6 +361,14 @@ endfunc
 
 func! s:GetFinal( modifiers )
 	return tolower(a:modifiers) =~ s:regex["final"]
+endfunc
+
+func! s:GetAuthor()
+  if exists('g:pdv_author')
+    return g:pdv_author
+  else
+    return "Author not set ! Define it in your vimrc : ':let g:pdv_author=\"authorname\"'"
+  endif
 endfunc
 
 func! s:GetDate()
