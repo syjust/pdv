@@ -5,4 +5,6 @@
  * @see {{name}}{{/parent}}{{#abstract}}
  * @abstract{{/abstract}}{{#final}}
  * @final{{/final}}
+ *
+ * @date {{date}}
  */
